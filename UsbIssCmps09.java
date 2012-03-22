@@ -10,10 +10,29 @@ public class UsbIssCmps09 implements SerialPortListener {
 
     Object readBlock = new Object();
 
+    private QueryThread queryThread;
+
+    private int bearing;
+
+    private class QueryThread extends Thread {
+      public void run() {
+        while (true) {
+          try {
+            bearing = queryCMPS10();
+          } catch (IOException e) {
+            // TODO: handle error in the serial comm
+          }
+        }
+      }
+    }
+
     public UsbIssCmps09(String portName) throws IOException, UnsupportedCommOperationException {
        this.portName = portName;
        open();
        setI2CMode();
+
+       queryThread = new QueryThread();
+       queryThread.start();
     }
 
     private void open() throws IOException, UnsupportedCommOperationException {
@@ -92,7 +111,7 @@ public class UsbIssCmps09 implements SerialPortListener {
     }
   }
 
-    public int getDirection() throws IOException {
+    private int queryCMPS10() throws IOException {
     	int bearing;
     	byte[] cmd = {
     			0x55,	// USBI2C command for single byte address device
@@ -108,6 +127,10 @@ public class UsbIssCmps09 implements SerialPortListener {
 
     	bearing = ((resp[2] << 8) + resp[3]) /10;
     	return bearing;
+    }
+
+    public int getDirection() {
+      return bearing;
     }
 
 	/**
