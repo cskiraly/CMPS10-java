@@ -125,7 +125,7 @@ public class UsbIssCmps09 implements SerialPortListener {
     	out.flush();
     	read(resp);
 
-    	bearing = ((resp[2] << 8) + resp[3]) /10;
+    	bearing = ((resp[2] << 8) + (resp[3] & 0xFF)) /10;
     	return bearing;
     }
 
