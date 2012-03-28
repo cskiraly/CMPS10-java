@@ -3,6 +3,8 @@ import net.tinyos.comm.*;
 
 public class UsbIssCmps09 implements SerialPortListener {
 
+    public enum Axis {YAW, PITCH, ROLL};
+
     private SerialPort port;
     private String portName;
     private InputStream in;
@@ -12,13 +14,18 @@ public class UsbIssCmps09 implements SerialPortListener {
 
     private QueryThread queryThread;
 
-    private int bearing;
+    private int yaw;
+    private int roll;
+    private int pitch;
 
     private class QueryThread extends Thread {
       public void run() {
         while (true) {
           try {
-            bearing = queryCMPS10();
+            int[] ret = queryCMPS10();
+            yaw = ret[Axis.YAW.ordinal()];
+            pitch = ret[Axis.PITCH.ordinal()];
+            roll = ret[Axis.ROLL.ordinal()];
           } catch (IOException e) {
             // TODO: handle error in the serial comm
           }
@@ -111,8 +118,9 @@ public class UsbIssCmps09 implements SerialPortListener {
     }
   }
 
-    private int queryCMPS10() throws IOException {
-    	int bearing;
+    private int[] queryCMPS10() throws IOException {
+    	int[] ret = new int[3];
+
     	byte[] cmd = {
     			0x55,	// USBI2C command for single byte address device
     			(byte)0xC1,	// CMPS09 address with R/W bit set high
@@ -125,12 +133,26 @@ public class UsbIssCmps09 implements SerialPortListener {
     	out.flush();
     	read(resp);
 
-    	bearing = ((resp[2] << 8) + (resp[3] & 0xFF)) /10;
-    	return bearing;
+    	ret[Axis.YAW.ordinal()] = ((resp[2] << 8) + (resp[3] & 0xFF)) /10;
+    	ret[Axis.PITCH.ordinal()] = resp[4];
+    	ret[Axis.ROLL.ordinal()] = resp[5];
+    	return ret;
     }
 
     public int getDirection() {
-      return bearing;
+      return yaw;
+    }
+
+    public int getYaw() {
+      return yaw;
+    }
+
+    public int getRoll() {
+      return roll;
+    }
+
+    public int getPitch() {
+      return pitch;
     }
 
 	/**
