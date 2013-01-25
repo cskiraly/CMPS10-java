@@ -8,8 +8,7 @@ paper:
 Kiraly, Csaba, and Gian Pietro Picco. "Where's the Mote? Ask the
 MoteHunter!" In 7th IEEE International Workshop on Practical Issues in
 Building Sensor Network Applications 2012 (SenseApp 2012), 986-994.
-Clearwater, Florida, USA: IEEE, 2012. Abstract
-
+Clearwater, Florida, USA: IEEE, 2012.
 
 Copyright
 =========
@@ -90,3 +89,9 @@ http://www.robot-electronics.co.uk/htm/cmps10doc.htm
 
 USB-ISS - Multifunction USB Communications Module
 http://www.robot-electronics.co.uk/htm/usb_iss_tech.htm
+
+Kiraly, Csaba, and Gian Pietro Picco. "Where's the Mote? Ask the
+MoteHunter!" In 7th IEEE International Workshop on Practical Issues in
+Building Sensor Network Applications 2012 (SenseApp 2012), 986-994.
+Clearwater, Florida, USA: IEEE, 2012.
+http://csabakiraly.com/files/preprints/kiraly-2012SenseApp-MoteHunter.pdf
