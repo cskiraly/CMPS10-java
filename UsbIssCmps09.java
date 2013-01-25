@@ -1,7 +1,7 @@
 /*
 /* Copyright (c) 2012-2013 Csaba Kiraly http://csabakiraly.com
  *
- * This is a java driver for the CMPS09 tilt compensated compass.
+ * This is a java driver for the CMPS09/CMPS10 tilt compensated compass.
  *
  * UsbIssCmps09 is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Affero General Public License as
